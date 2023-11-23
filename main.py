@@ -28,7 +28,6 @@ class Test:
 
     def compile(self):
         compilResult = runCommand(self.compilation)
-        print(compilResult[1])
         if compilResult[1]:
             return 1
         return 0
@@ -92,18 +91,6 @@ def getAllDirectory():
             dirs.append(i)
     return (dirs)
 
-def appendResult(file, groupname, testname, mini, maxi, moy, n, failed):
-    results = {
-        "group": groupname,
-        "name": testname,
-        "min": mini,
-        "max": maxi,
-        "moy": moy,
-        "n": n,
-        "failed": failed
-    }
-    file.write(json.dumps(results) + ",\n")
-
 class RunGroup:
     def __init__(self, group, configRunners, resultFile, pathToLoad):
         self.group = group
@@ -127,8 +114,45 @@ def getTestsToRun():
     configFile.close()
     return (dataConfig)
 
+class Group:
+    def __init__(self, name: str):
+        self.name = name
+        self.moys = []
 
-def analysis
+    def addMoy(self, e: int):
+        if (e < 0):
+            self.moys.append(4200000000)
+        self.moys.append(e)
+
+    def getGlobalMoyenne(self):
+        return (sum(self.moys) / len(self.moys))
+
+    def getQuantity(self):
+        return (len(self.moys))
+
+
+def analysis():
+    groups = {}
+    resultFile = open("result.json", "r")
+
+    readed = resultFile.readline()
+    while (readed != ""):
+        data = json.loads(readed)
+        if data["group"] not in groups:
+            groups[data["group"]] = Group(data["group"])
+        groups[data["group"]].addMoy(data["moyenne"])
+        readed = resultFile.readline()
+    resultFile.close()
+
+    best = []
+    for i_key, i_value in groups.items():
+        if not best:
+            best = [i_key, i_value]
+        elif best[1].getGlobalMoyenne() > i_value.getGlobalMoyenne():
+            best = [i_key, i_value]
+        print(TextColors.WHITE + "Group named " + TextColors.RESET + TextColors.CYAN + i_value.name + TextColors.RESET + TextColors.WHITE + " got an global average of " + TextColors.YELLOW + str(i_value.getGlobalMoyenne()) + TextColors.RESET + TextColors.WHITE + " on " + TextColors.YELLOW + str(i_value.getQuantity()) + TextColors.RESET + TextColors.WHITE + " tests !")
+    print("The best group was " + TextColors.MAGENTA + best[0] + TextColors.RESET + TextColors.WHITE + " with a global average of " + TextColors.RESET + TextColors.GREEN + str(best[1].getGlobalMoyenne()))
+
 def runner(directory):
     resultFile = open("result.json", "w+", buffering=1)
     configRunners = getTestsToRun()
@@ -143,6 +167,8 @@ def runner(directory):
         groupRunner.run()
         os.chdir(testPath)
     resultFile.close()
+    os.chdir(basePath)
+    analysis()
 
 if (len(sys.argv) == 1):
     runner(os.getcwd())

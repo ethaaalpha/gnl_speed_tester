@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "gnl.h"
+#include "get_next_line.h"
 
 unsigned int	next_line_len(char *buffer)
 {
