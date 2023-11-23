@@ -1,0 +1,4 @@
+{"group": "gnl", "name": "lorem-ipsum", "mininum": 0.004330125000706175, "maximum": 0.042890665999948396, "moyenne": 0.005040294620084751, "quantity": 100, "failed": 0}
+{"group": "gnl4", "name": "lorem-ipsum", "mininum": 0.004251250000379514, "maximum": 0.04414037500100676, "moyenne": 0.0051106104700556895, "quantity": 100, "failed": 0}
+{"group": "gnl3", "name": "lorem-ipsum", "mininum": 0.004331291000198689, "maximum": 0.03974541599927761, "moyenne": 0.005686127849949116, "quantity": 100, "failed": 0}
+{"group": "gnl2", "name": "lorem-ipsum", "mininum": 0.004301958999349154, "maximum": 0.04680358299992804, "moyenne": 0.0050191108698891184, "quantity": 100, "failed": 0}
