@@ -2,3 +2,4 @@ venv/
 .idea
 .o
 .iml
+result.json
